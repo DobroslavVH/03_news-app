@@ -1,20 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from '@react-navigation/native'
+
+import CategoryProvider from "./src/context/CategoryContext/Provider";
+import NewsProvider from "./src/context/NewsContext/Provider";
+
+import InfoScreen from "./src/screens/InfoScreen/InfoScreen";
+import WelcomeScreen from "./src/screens/WelcomeScreen/WelcomeScreen";
+import NewsScreen from "./src/screens/NewsScreen/NewsScreen";
+import SettingsScreen from "./src/screens/SettingsScreen/SettingsScreen";
+
+import { Ionicons } from "@expo/vector-icons";
+import { colorGreyDark1, colorGreyLight4, colorPrimary } from "./assets/base";
+
 
 export default function App() {
+  const Tab = createBottomTabNavigator()
+  const Stack = createStackNavigator()
+
+  const BottomTabs = () => {
+    return (
+      <Tab.Navigator
+        initialRouteName="Welcome"
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: colorGreyDark1
+          }
+        }}
+      >
+        <Tab.Screen
+          name='Welcome'
+          component={WelcomeScreen}
+          options={{
+            tabBarIcon: ({ focused }) => <Ionicons name="cafe" size={30} color={focused ? colorPrimary : colorGreyLight4} />
+          }}
+        />
+        <Tab.Screen
+          name='News'
+          component={NewsScreen}
+          screenOptions={{
+            headerShown: false
+          }}
+          options={{
+            tabBarIcon: ({ focused }) => <Ionicons name="book" size={30} color={focused ? colorPrimary : colorGreyLight4} />
+          }}
+        />
+        <Tab.Screen
+          name='Settings'
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({ focused }) => <Ionicons name="options" size={30} color={focused ? colorPrimary : colorGreyLight4} />
+          }}
+        />
+      </Tab.Navigator>
+    )
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NewsProvider>
+      <CategoryProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='Info' component={InfoScreen} />
+            <Stack.Screen name='Tabs' component={BottomTabs} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CategoryProvider>
+    </NewsProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
