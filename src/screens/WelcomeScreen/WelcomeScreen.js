@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState, useContext } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import styles from './styles'

@@ -6,7 +6,7 @@ import NewsHeader from '../../components/headers/NewsHeader/NewsHeader'
 import NewsContext from '../../context/NewsContext/index'
 import NewsPreview from '../../components/NewsPreview/NewsPreview'
 
-import { colorGreyDark1 } from '../../../assets/base'
+import { colorGreyDark1, colorPrimary } from '../../../assets/base'
 import styles from './styles'
 
 const NewsScreen = () => {
@@ -37,10 +37,10 @@ const NewsScreen = () => {
     const filterDuplicates = [...new Set(country)].map((item) => item.toUpperCase())
 
     // filter categories to be shown    
-    let index = country.indexOf(selectedCountry.toLowerCase())
+    let index = country.indexOf(selectedCountry?.toLowerCase())
     while (index !== -1) {
         indices.push(index);
-        index = country.indexOf(selectedCountry.toLowerCase(), index + 1);
+        index = country.indexOf(selectedCountry?.toLowerCase(), index + 1);
     }
 
     // filter news and categories depend of selected language
@@ -139,18 +139,26 @@ const NewsScreen = () => {
                     <Text style={styles.categoryLabel}>{visibleCategories[sliderState.item]?.charAt(0).toUpperCase() + category[sliderState.item]?.slice(1) || 'No category'}</Text>
                     {DotsIndicator()}
                 </View>
-
                 <View style={styles.dropDown}>
                     <NewsHeader />
                     <SelectList
                         data={filterDuplicates}
-                        placeholder={selectedCountry.toUpperCase()}
+                        placeholder={selectedCountry?.toUpperCase() || 'No country'}
                         setSelected={(item) => setSelectedCountry(item)}
                         search={false}
                         dropdownShown={false}
                     />
                 </View>
             </View>
+            {newsObjects.length === 0 && (
+                <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 40, height: screenHeight - 150 }}>
+                    <Text
+                        style={{ fontSize: 25, color: colorPrimary }}
+                    >
+                        Ups! Sorry, but nothing to display now!
+                    </Text>
+                </View>
+            )}
             <FlatList
                 data={visibleCategories}
                 renderItem={NewsRender}

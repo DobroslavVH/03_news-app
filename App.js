@@ -8,7 +8,6 @@ import NewsProvider from "./src/context/NewsContext/Provider";
 import InfoScreen from "./src/screens/InfoScreen/InfoScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen/WelcomeScreen";
 import NewsScreen from "./src/screens/NewsScreen/NewsScreen";
-import SettingsScreen from "./src/screens/SettingsScreen/SettingsScreen";
 
 import { Ionicons } from "@expo/vector-icons";
 import { colorGreyDark1, colorGreyLight4, colorPrimary } from "./assets/base";
@@ -30,10 +29,10 @@ export default function App() {
         }}
       >
         <Tab.Screen
-          name='Welcome'
+          name='Settings'
           component={WelcomeScreen}
           options={{
-            tabBarIcon: ({ focused }) => <Ionicons name="cafe" size={30} color={focused ? colorPrimary : colorGreyLight4} />
+            tabBarIcon: ({ focused }) => <Ionicons name="options" size={30} color={focused ? colorPrimary : colorGreyLight4} />
           }}
         />
         <Tab.Screen
@@ -46,13 +45,7 @@ export default function App() {
             tabBarIcon: ({ focused }) => <Ionicons name="book" size={30} color={focused ? colorPrimary : colorGreyLight4} />
           }}
         />
-        <Tab.Screen
-          name='Settings'
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({ focused }) => <Ionicons name="options" size={30} color={focused ? colorPrimary : colorGreyLight4} />
-          }}
-        />
+
       </Tab.Navigator>
     )
   }
